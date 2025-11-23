@@ -1,0 +1,10 @@
+tk
+psycopg2-binary
+requests
+pillow
+pywebview
+python-dotenv
+bcrypt
+tkinterweb
+cefpython3
+
