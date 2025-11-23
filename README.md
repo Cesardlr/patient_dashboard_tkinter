@@ -1,180 +1,70 @@
-# PatientDashboard – Tkinter + Avatar IA + PostgreSQL
+# Patient Dashboard - Tkinter
 
-Este proyecto implementa un **dashboard de paciente en Tkinter** con:
+Dashboard de paciente con interfaz Tkinter que incluye:
 
-- 🔹 Avatar médico IA (WebView2 / Edge / CEF según OS)
-- 🔹 Datos reales desde PostgreSQL
-- 🔹 Login por usuario
-- 🔹 Vista de condiciones, información general y archivos médicos
-- 🔹 Vista con scroll + tablas + previsualización de imágenes/PDF
-
-Funciona en **Windows, macOS y Linux**.
+- 🔹 Avatar médico IA (se abre automáticamente después del login)
+- 🔹 Información del paciente desde PostgreSQL
+- 🔹 Visualización de archivos médicos
 
 ---
 
-# 🖥 Requisitos previos
+## 📋 Requisitos
 
-## 1. Python 3.9 (obligatorio)
-El proyecto debe correr en un entorno virtual llamado `venv39`.
+- Python 3.9+
+- PostgreSQL en ejecución
+- Archivo `.env` con las credenciales de la base de datos
 
-### Windows
-```powershell
-winget install Python.Python.3.9
-macOS (Intel/M1/M2/M3)
-bash
-Copiar código
-brew install python@3.9
-Linux (Ubuntu/Debian/Fedora/Arch)
-bash
-Copiar código
-sudo apt install python3.9 python3.9-venv -y
-(En Arch: sudo pacman -S python39 si está disponible en AUR)
+---
 
-2. PostgreSQL
-Debe estar en funcionamiento.
-Valores por defecto:
+## 🚀 Pasos para ejecutar
 
-yaml
-Copiar código
-host: localhost
-port: 5432
-database: ai_med_db
-user: postgres
-password: root
-Puedes cambiarlos en el código.
+### 1. Instalar dependencias
 
-⚙ Instalación por sistema operativo
-🪟 WINDOWS
-1. Crear el entorno virtual
-powershell
-Copiar código
-py -3.9 -m venv venv39
-2. Activarlo
-powershell
-Copiar código
-.\venv39\Scripts\activate
-3. Instalar dependencias
-powershell
-Copiar código
+```bash
 pip install -r requirements.txt
-4. Ejecutar
-powershell
-Copiar código
-python PatientDashboard.py
-🍎 MACOS (INTEL y APPLE SILICON M1/M2/M3)
-⚠ Nota importante
-macOS no tiene WebView2.
-PyWebview usará Safari WKWebView, que funciona perfecto.
+```
 
-1. Crear el entorno
-bash
-Copiar código
-python3.9 -m venv venv39
-2. Activar
-bash
-Copiar código
-source venv39/bin/activate
-3. Instalar requirements
-bash
-Copiar código
-pip install -r requirements.txt
-macOS puede requerir esto adicionalmente:
+### 2. Configurar base de datos
 
-bash
-Copiar código
-pip install pyobjc
-4. Ejecutar
-bash
-Copiar código
-python PatientDashboard.py
-🐧 LINUX (Ubuntu/Debian/Fedora/Arch)
-1. Instalar dependencias del sistema
-bash
-Copiar código
-sudo apt install python3.9 python3.9-venv python3.9-dev -y
-sudo apt install libgtk-3-dev libwebkit2gtk-4.0-dev -y
-(Las últimas dos son para WebKitGTK, navegador de pywebview.)
+Crea un archivo `.env` en la raíz del proyecto con:
 
-2. Crear el entorno
-bash
-Copiar código
-python3.9 -m venv venv39
-3. Activarlo
-bash
-Copiar código
-source venv39/bin/activate
-4. Instalar requirements
-bash
-Copiar código
-pip install -r requirements.txt
-5. Ejecutar
-bash
-Copiar código
-python PatientDashboard.py
-📁 requirements.txt
-txt
-Copiar código
-tk
-psycopg2-binary
-requests
-pillow
-pywebview
-Linux/macOS adicionales si hay errores:
-txt
-Copiar código
-pyobjc
-🔑 Configurar credenciales
-En PatientDashboard.py cambia:
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=medico_db
+DB_USER=admin
+DB_PASSWORD=admin123
+```
 
-python
-Copiar código
-DB_CONFIG = {
-    "host": "localhost",
-    "port": 5432,
-    "database": "ai_med_db",
-    "user": "postgres",
-    "password": "root"
-}
-🔐 Credenciales de prueba
-Usuario	Password	Perfil
-paciente1	root	Paciente
-paciente2	root	Paciente
-doctor1	root	Médico
-admin1	root	Admin/Demo
+O modifica directamente `DB_CONFIG` en `patient_dashboard.py` si prefieres.
 
-▶️ Cómo correr el programa
-1. Activar entorno
-Windows:
+### 3. Ejecutar la aplicación
 
-powershell
-Copiar código
-.\venv39\Scripts\activate
-macOS/Linux:
+```bash
+python patient_dashboard.py
+```
 
-bash
-Copiar código
-source venv39/bin/activate
-2. Ejecutar
-bash
-Copiar código
-python PatientDashboard.py
-❗ Problemas comunes
-❗ psycopg2 error
-php
-Copiar código
-pip install psycopg2-binary
-❗ WebView blanco
-En Windows requiere Edge WebView2:
+---
 
-nginx
-Copiar código
-winget install Microsoft.EdgeWebView2Runtime
-❗ PDF no abre
-Se abre en navegador externo (es normal).
+## 🔑 Login
 
-❗ Imágenes no cargan
-Reinstalar Pillow:
+Después de ejecutar, ingresa tus credenciales en la pantalla de login. El avatar se abrirá automáticamente después de un login exitoso.
 
-css
-Copiar código
-pip install pillow --force-reinstall
+---
+
+## ⚠️ Notas
+
+- **Windows**: Requiere Edge WebView2 Runtime para el avatar
+- **macOS/Linux**: Usa WebKit nativo del sistema
+- El avatar se abre en una ventana separada con EdgeChromium
+
+---
+
+## 📦 Dependencias principales
+
+- `tkinter` - Interfaz gráfica
+- `psycopg2-binary` - Conexión a PostgreSQL
+- `pywebview` - Ventana del avatar
+- `pillow` - Manejo de imágenes
+- `python-dotenv` - Variables de entorno
+- `bcrypt` - Hashing de contraseñas
